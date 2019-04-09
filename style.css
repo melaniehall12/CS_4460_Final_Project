@@ -68,7 +68,18 @@ circle.hidden {
   fill-opacity: .2;
 }
 
-rect.hidden {
+@media screen and (min-width:2300px) {
+	.larger-container {
+		width:55%;
+	}
+}
+@media screen and (max-width:720px) {
+	.container, .larger-container, .smaller-container {
+		width: 90%;
+	}
+}
+
+/*rect.hidden {
   fill: #ccc !important;
   fill-opacity: .2;
-}
+}*/

@@ -30,6 +30,7 @@ var hBarHeight = 4;
 var genderColors = {male: '#8c8c8c', female: '#d86763'};
 var brushColors = ['#fcc9b5','#fa8873','#d44951','#843540']; //var brushColors = ['#fcc9b5','#fa8873','#d44951','#843540'];
 
+//Brush for graphs.
 var brush = d3.brushX()
     .extent([[0, 0], [brushChartWidth, brushChartHeight]])
     .on("start", brushstart)
@@ -38,10 +39,9 @@ var brush = d3.brushX()
 
 var brushCell;    
 
-
 d3.csv('./data/candy.csv',
 function(row){
-    // This callback formats each row of the data
+    //Formats each row of data.
     return {
     	gender: row.Q2_GENDER,
     	age: row.Q3_AGE,
@@ -103,7 +103,7 @@ function(error, dataset){
         return;
     }
 
-    var barChartNested = d3.nest()
+    var hBarChartNest = d3.nest()
         .key(function(d) { return d.country; })
         .rollup(function(v) { return {
             density_2000: d3.mean(v, function(d) { return d.density_2000; }),
@@ -118,15 +118,15 @@ function(error, dataset){
 
 
     //Sorting data by 2010 values for each bar chart
-    var densityBarData = barChartNested.slice(0).sort(function(x, y){
+    var densityBarData = hBarChartNest.slice(0).sort(function(x, y){
         return d3.descending(x.value.density_2010, y.value.density_2010);
     })
 
-    var popBarData = barChartNested.slice(0).sort(function(x, y){
+    var popBarData = hBarChartNest.slice(0).sort(function(x, y){
         return d3.descending(x.value.pop_2010, y.value.pop_2010);
     })
 
-    var landBarData = barChartNested.slice(0).sort(function(x, y){
+    var landBarData = hBarChartNest.slice(0).sort(function(x, y){
         return d3.descending(x.value.land_2010, y.value.land_2010);
     })
 
@@ -334,7 +334,7 @@ function(error, dataset){
         })
     .call(brush);
 
-    //X & Y axis placement for each histogram 
+    //X & Y axis placement for brush/link charts.
     svg.append("g")
         .attr("class", "x-axis")
         .attr("transform", 'translate('+[brushChartWidth - brushLinkPadding.l*3 - brushLinkPadding.r*3 - 10, (brushChartHeight)]+')')
@@ -365,13 +365,6 @@ function(error, dataset){
         .attr('transform', 'translate('+[(hChartWidth*3 - brushLinkPadding.l*2) - (hBarPadding.l/2) + 125]+')')
         .call(d3.axisLeft(yLandGrowthScale).ticks(7).tickSize(-brushChartWidth).tickSizeOuter(0));        
 
-
-
-
-
-
-
-
     svg.selectAll('.barcharts')
         .data(['A', 'B', 'C']) 
         .enter()
@@ -400,7 +393,7 @@ function(error, dataset){
         .domain([0, maxLand])
         .range([0, hChartWidth/1.65]);   
 
-    //X axis placement for each bar chart
+    //X-axis for horizontal bar charts.
     svg.append('g')
         .attr('class', 'x-axis')
         .attr('transform', 'translate('+[hChartWidth + 85, (hChartHeight+40) - hBarPadding.b]+')')
@@ -416,24 +409,18 @@ function(error, dataset){
         .attr('transform', 'translate('+[(hChartWidth + 80)*3-5 - (hBarPadding.l/2), (hChartHeight+40) - hBarPadding.b]+')')
         .call(d3.axisBottom(xLandScale).ticks(6, "s")); 
    
-
-    //Labels for each bar chart
+    //Titles for horizontal bar charts.
     svg.append('text')
         .attr('class', 'label')
         .attr('transform', 'translate('+[hChartWidth + 260, 28]+')')
-        .text('Avg. population density (in persons/sq. km)');
+        .text('Gender Distribution for Different Candies');
 
     svg.append('text')
         .attr('class', 'label')
         .attr('transform', 'translate('+[(hChartWidth*2 + 260)-10 , 28]+')')
-        .text('Urban population');
+        .text('Maybe A Graph?');  
 
-    svg.append('text')
-        .attr('class', 'label')
-        .attr('transform', 'translate('+[(hChartWidth*3 + 260)+70, 28]+')')
-        .text('Urban land (in sq. km)');   
-
-    //Y Labels for each histogram
+    //Y-axis label for brush/link charts.
     svg.append('text')
         .attr('class', 'label')
         .attr('transform', 'translate('+[brushChartWidth-130, brushChartHeight-110]+') rotate(270)')
@@ -444,12 +431,7 @@ function(error, dataset){
         .attr('transform', 'translate('+[brushChartWidth*2-90, brushChartHeight-110]+') rotate(270)')
         .text('Number of Cities'); 
 
-    svg.append('text')
-        .attr('class', 'label')
-        .attr('transform', 'translate('+[brushChartWidth*3-55, brushChartHeight-110]+') rotate(270)')
-        .text('Number of Cities'); 
-
-    //Lebels for each histogram  
+    //Titles for brush/link charts. 
     svg.append('text')
         .attr('class', 'histo-label')
         .attr('transform', 'translate('+[brushChartWidth+30, brushChartHeight-260]+')')
@@ -474,19 +456,7 @@ function(error, dataset){
         .attr('dy', '1.2em')
         .text('between 2000 and 2010');     
 
-    svg.append('text')
-        .attr('class', 'histo-label')
-        .attr('transform', 'translate('+[(brushChartWidth+30)*3, brushChartHeight-260]+')')
-        .append('tspan')
-        .attr('x', 0)
-        .attr('dy', '1.2em')
-        .text('Growth in urban land')
-        .append('tspan')
-        .attr('x', 0)
-        .attr('dy', '1.2em')
-        .text('between 2000 and 2010'); 
-
-    //Legends for each histogram
+    //Legends for brush/link charts.
     svg.append('text')
         .attr('class', 'histo-legend')
         .attr('transform', 'translate('+[brushChartWidth+230, brushChartHeight-175]+')')
@@ -696,7 +666,7 @@ function(error, dataset){
         })   
 
     popCountryEnter.append('rect')
-        .attr('fill', genderColors["2010"])
+        .attr('fill', genderColors["female"])
         .attr('height', hBarHeight)
         .attr('width', function(d){
             return xPopScale(d.value.pop_2010);
@@ -721,7 +691,7 @@ function(error, dataset){
         })
 
     landCountryEnter.append('rect')
-        .attr('fill', genderColors["2000"])
+        .attr('fill', genderColors["male"])
         .attr('height', hBarHeight)
         .attr('width', function(d){
             return xLandScale(d.value.land_2000);

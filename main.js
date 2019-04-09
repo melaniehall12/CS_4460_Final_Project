@@ -1,7 +1,7 @@
 /*
 "A Sweet Visualization"
 CS 4460: P5
-Group: Melanie Hall
+Group: Chianne Connelly and Melanie Hall
 
 Categories: Gender, Age, Country, Candies w/ JOY, MEH, or DESPAIR.
 

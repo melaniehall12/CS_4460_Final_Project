@@ -13,7 +13,8 @@ body {
 
 .title h3 {
 	font-family: SchoolBookFont;
-    font-size: 70px;
+    font-size: 50px;
+    text-align: center;
 }
 
 circle.hidden {

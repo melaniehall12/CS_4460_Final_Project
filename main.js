@@ -5,6 +5,9 @@ CS 4460: P5
 Dataset: 'colleges.csv' 
 */
 
+var width =500;
+var height= 500;
+
 d3.csv('./data/colleges.csv', function(error, dataset) {
 	console.log(dataset[0])
     var svgLines = d3.select('svg');
@@ -46,6 +49,21 @@ d3.csv('./data/colleges.csv', function(error, dataset) {
     var mean8 = d3.nest()
     	.key(function(d) { return d.Mean8})
     	.entries(dataset);	
+
+
+
+    //Value Scales
+    var yACT = d3.scaleLinear()
+    	.domain([0, d3.max(act)])	
+
+    var yAxisACT = d3.axisLeft().scale(yACT)	
+
+    svgLines.append('g')
+    	.attr("class", "y-axis")
+    	.call(yAxisACT)
+    	.attr("transform", "translate(120,0)");
+
+})    	
 
 
 

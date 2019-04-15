@@ -137,13 +137,13 @@ d3.csv('./data/colleges.csv', function(csv) {
       if (value!='None'){
         d3.selectAll('circle')
           .filter(function(d){
-            return d.Control == value;
+            return d.Control != value;
           })
           .transition()
           .style("opacity", 0);
         d3.selectAll('circle')
           .filter(function(d){
-            return d.Control != value;
+            return d.Control == value;
           })
           .transition()
           .style("opacity", 0.8)

@@ -494,7 +494,11 @@ d3.csv('./data/colleges.csv', function(csv) {
        .enter()
        .append("circle")
        .attr("id",function(d,i) {return i;} )
-       .attr('fill',function (d,i) { return colorScale(i) })
+       .attr('fill',function (d,i) { 
+            if (d.Control == 'Public'){
+              return '#ffae3d';
+            }
+            return '#0209e5';})
        .on('mouseover', function () {
         d3.select(this)
           .transition()
@@ -545,7 +549,12 @@ d3.csv('./data/colleges.csv', function(csv) {
        .enter()
        .append("circle")
        .attr("id",function(d,i) {return i;} )
-       .attr('fill',function (d,i) { return colorScale(i) })
+       .attr('fill',function (d,i) { 
+            if (d.Control == 'Public'){
+              return '#ffae3d';
+            }
+            return '#0209e5';
+        })
        .on('mouseover', function () {
         d3.select(this)
           .transition()

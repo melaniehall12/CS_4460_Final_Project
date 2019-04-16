@@ -1,7 +1,7 @@
 //Final Project: "College Stats Across the U.S."
 //CS 4460: P5
 //Group: Chianne Connelly (903047323), Melanie Hall (903112239), and Wheezy Menk (903104394)
-//Data: 'colleges.csv;
+//Data: 'colleges.csv'
 
 //Set heighth and width of charts:
 var width = 600;
@@ -209,8 +209,6 @@ d3.csv('./data/colleges.csv', function(csv) {
           .attr('width',20)
           .attr('height',10)
           .attr('fill','#0209e5')
-
-
 
      var legend = d3.select("#legend")
                    .append("svg")

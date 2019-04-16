@@ -1,21 +1,26 @@
 body {
   font: 16px SchoolBookFont;
 }
+
 .tick > line {
 	fill: none;
 	stroke: black;
 }
+
 .tick > text {
 	fill: black;
 }
+
 .selected {
 	stroke: black;
 	fill: black;
 }
+
 .selected2 {
 	stroke: black;
 	fill: black;
 }
+
 path.domain {
 	fill: none;
 	stroke-width: 2px;
@@ -26,11 +31,11 @@ path.domain {
   display: grid;
 }
 
-
 #collegeSelector {
 	float: left;
 	width: 200px;
 }
+
 .brush .extent {
 	fill-opacity: .1;
 	stroke: #fff;
@@ -46,15 +51,5 @@ path.domain {
 	font-family: SchoolBookFont;
     font-size: 50px;
     text-align: center;
-}
-
-@media screen and (min-width:2300px) {
-	.larger-container {
-		width:55%;
-	}
-}
-@media screen and (max-width:720px) {
-	.container, .larger-container, .smaller-container {
-		width: 90%;
-	}
+    margin-bottom: 30px;
 }

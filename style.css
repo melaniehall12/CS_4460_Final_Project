@@ -21,36 +21,12 @@ path.domain {
 	stroke-width: 2px;
 	stroke: black;
 }
+
 #wrapper {
-	clear:both;
+  display: grid;
 }
-#chart1 {
-    float:left;
-    margin-top: 100px;
-    margin-left: 20px;
-}
-#chart2{
-	float:left;
-	margin-top: 100px;
-	margin-left: 20px;
-}
-#chart3 {
-	float:left;
-	margin-left: 650px;
-	margin-bottom: 120px;
-	margin-top: -35px;
-}
-#chart4 {
-	margin-left: 140px;
-}
-#chart5 {
-    margin-left: 750px;
-    margin-top: -60px;
-}
-#chart6 {
-	margin-left: 450px;
-	margin-top: 80px;
-}
+
+
 #collegeSelector {
 	float: left;
 	width: 200px;

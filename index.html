@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8"/> 
+		<meta charset="UTF-8"/>
 		<title>Final Project (P5): College Data</title>
 		<link href="style.css" type="text/css" rel="stylesheet" />
 		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script type="text/javascript" src="main.js"></script>	
+		<script type="text/javascript" src="main.js"></script>
    	</head>
 	<body>
 		<!-- <div id="main" class="larger-container">
@@ -13,36 +13,37 @@
 	        </svg>  -->
 	    <div class="title" style="position: absolute; left: 290px; top: -30px; z-index:10">
 	        <h3>College Stats Across the U.S.</h3>
-	    </div>  
+	    </div>
 		<div id="wrapper">
-			<div id="chart1"></div>
-		  	<div id="chart2"></div>
-		  	<div id="chart4">
+			<div id="chart1" style="position: absolute; left: 50px; top: 50px";></div>
+		  	<div id="chart2" style="position: absolute; left: 650px; top: 50px";></div>
+		  	<div id="chart4" style="position: absolute; left: 100px; top: 650px";>
+		  		<strong>Chart 1 </strong><br/>
 		  		<strong>Select X-Axis Variable: </strong> <span id="xAxisText"></span><br/>
 		  		<strong>Select Y-Axis Variable: </strong> <span id="yAxisText"></span><br/>
-		  	</div>  
-		  	<div id="chart5">
+		  	</div>
+		  	<div id="chart5" style="position: absolute; left: 750px; top: 650px";>
+		  		<strong>Chart 2 </strong><br/>
 		  		<strong>Select X-Axis Variable: </strong> <span id="xAxis2Text"></span><br/>
 		  		<strong>Select Y-Axis Variable: </strong> <span id="yAxis2Text"></span><br/>
-		  	</div>	
-		  	<div id="chart6">
-		  		<strong>Filter: </strong> <span id="filter"></span><br/><br/>
-		  		<strong>Legend: </strong> <span id="legend"></span><br/>
-		  		<strong>&emsp;&emsp;Public: </strong> <span id="public"></span><br/>
-		  		<strong>&emsp;&emsp;Private: </strong> <span id="private"></span><br/>
-		  		<svg></svg>
 		  	</div>
-		  	<div id="chart3">
+		  	<div id="chart6" style="position: absolute; left: 500px; top: 850px";>
+		  		<strong>Filter: </strong> <span id="filter"></span><br/><br/>
+		  		<strong>Legend: </strong> <br/><br>
+		  		<span id="legend"></span>
+
+		  	</div>
+		  	<div id="chart3" style="position: absolute; left: 700px; top: 850px";>
 		  		<strong>College:</strong> <span id="name"></span><br/>
 		  		<strong>Type:</strong> <span id="type"></span><br/>
 		  		<strong>Region:</strong> <span id="region"></span><br/>
-		  		<strong>Average Cost:</strong> <span id="avgcost"></span><br/> 
-		  		<strong>Retention Rate:</strong> <span id="retrate"></span><br/> 
+		  		<strong>Average Cost:</strong> <span id="avgcost"></span><br/>
+		  		<strong>Retention Rate:</strong> <span id="retrate"></span><br/>
 		        <strong>Median ACT Score:</strong> <span id="actmed"></span><br/>
 		        <strong>Average SAT Score:</strong> <span id="satavg"></span><br/>
 		        <strong>Median Debt on Graduation:</strong> <span id="meddebtgrad"></span><br/>
-		        <strong>Mean Earnings (8 Years):</strong> <span id="meanearn8"></span><br/>     
+		        <strong>Mean Earnings (8 Years):</strong> <span id="meanearn8"></span><br/>
 	        </div>
 	    </div>
-	</body>	 
+	</body>
 </html>

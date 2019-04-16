@@ -63,9 +63,6 @@ d3.csv('./data/colleges.csv', function(csv) {
     var xAxis2 = d3.axisBottom().scale(xScale2);
     var yAxis2 = d3.axisLeft().scale(yScale2);
 
-    //Set a color scale for circles:
-    var colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
     var comma = d3.format(","); //Places comman in numbers that require it.
     var formatPercent = d3.format('.2%');
 
@@ -79,16 +76,13 @@ d3.csv('./data/colleges.csv', function(csv) {
                      { "text" : "RetentionRate" },
                      { "text" : "SATAvg" },
                      { "text" : "UndergradPop" },
-                   ]
+                   ]             
 
-    var spanChart1 = body.append('span')
-      .text("Chart 1:")  
-      body.append('br')             
-
-    //Select x-axis variable:               
-    var spanTextX = body.append('span')
-      .text("Select X-Axis Variable: ")
-    var input = body.append('select')
+    //Select x-axis variable:
+    chart4
+      .append('g') 
+      d3.select('#xAxisText')              
+      .append('select')
       .attr('id','xSelect')
       .on('change', xChange)
       .selectAll('option')
@@ -97,12 +91,13 @@ d3.csv('./data/colleges.csv', function(csv) {
       .append('option')
       .attr('value', function (d) { return d.text })
       .text(function (d) { return d.text ;})
-    body.append('br')                 
+      .append('br')                 
 
     //Select y-axis variable:
-    var spanTextY = body.append('span')
-      .text("Select Y-Axis Variable: ")
-    var input2 = body.append('select')
+    chart4
+      .append('g')
+      d3.select('#yAxisText') 
+      .append('select')
       .attr('id','ySelect')
       .on('change', yChange)
       .selectAll('option')
@@ -111,7 +106,7 @@ d3.csv('./data/colleges.csv', function(csv) {
       .append('option')
       .attr('value', function (d) { return d.text })
       .text(function (d) { return d.text ;})
-    body.append('br') 
+      .append('br') 
 
     //Function to change yAxis:
     function yChange() {
@@ -229,43 +224,6 @@ d3.csv('./data/colleges.csv', function(csv) {
         .delay(function (d,i) { return i * 10})
           .attr('cx',function (d) { return xScale2(d[value]) })
     }
-
-
-    //Drop-down selection:
-  //   var selector = d3.select("body")
-  //   .append("select")
-  //   .attr("id", "collegeSelector")
-  //   .selectAll("option")
-  //   .data(csv)
-  //   .enter().append("option")
-  //   .text(function(d) { return d.Name; })
-  //   .attr("value", function (d, i) {
-  //     return i;
-  //   });
-    
-  //   var index = Math.round(Math.random() * csv.length);
-  //   d3.select("#collegeSelector").property("selectedIndex", index);  
-
-  //   d3.select("body")
-  //     .append("p")
-  //     .data(csv)
-  //     .text(function(d){ 
-  //       return csv[index]['Name'] + " - Debt: $" + comma(csv[index]['MedDebtGrad']); 
-  //   })
-
-  //   d3.select("#collegeSelector")
-  //     .on("change", function(d) {
-  //     index = this.value;
-  //     update();
-  //   })
-
-  //   function update(){
-  //   d3.selectAll("p")
-  //     .data(csv)
-  //     .text(function(d){ 
-  //       return csv[index]['Name'] + " - Debt: $" + comma(csv[index]['MedDebtGrad']); 
-  //     })
-  // }
     
     //Axis labels:
     //Create SVGs for charts:

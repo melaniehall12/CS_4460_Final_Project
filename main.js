@@ -67,6 +67,10 @@ d3.csv('./data/colleges.csv', function(csv) {
     var formatPercent = d3.format('.2%');
 
     var body = d3.select('body')
+    var selectFilter = [ {'text':'None'},
+                        {'text' : 'Public'},
+                        {'text': 'Private'},
+                        ]
     var selectData = [ { "text" : "ACTMedian" },
                      { "text" : "AdmissionRate" },
                      { "text" : "AverageCost" },
@@ -108,6 +112,7 @@ d3.csv('./data/colleges.csv', function(csv) {
       .text(function (d) { return d.text ;})
       .append('br') 
 
+   }
     //Function to change yAxis:
     function yChange() {
       var value = this.value //Get the new 'y' value.

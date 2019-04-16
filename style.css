@@ -41,11 +41,15 @@ path.domain {
 	margin-bottom: 20px;
 }
 #chart4 {
-	
+	margin-left: 200px;
+}
+#chart5 {
+    margin-left: 800px;
+    margin-top: -60px;
 }
 #collegeSelector {
-	float:left;
-	width:200px;
+	float: left;
+	width: 200px;
 }
 .brush .extent {
 	fill-opacity: .1;

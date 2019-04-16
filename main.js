@@ -82,9 +82,8 @@ d3.csv('./data/colleges.csv', function(csv) {
                      { "text" : "UndergradPop" },
                    ]             
 
-    //Select x-axis variable:
+    //Select Chart 1 x-axis variable:
     chart4
-      .append('g') 
       d3.select('#xAxisText')              
       .append('select')
       .attr('id','xSelect')
@@ -97,9 +96,8 @@ d3.csv('./data/colleges.csv', function(csv) {
       .text(function (d) { return d.text ;})
       .append('br')                 
 
-    //Select y-axis variable:
+    //Select Chart 1 y-axis variable:
     chart4
-      .append('g')
       d3.select('#yAxisText') 
       .append('select')
       .attr('id','ySelect')
@@ -110,7 +108,35 @@ d3.csv('./data/colleges.csv', function(csv) {
       .append('option')
       .attr('value', function (d) { return d.text })
       .text(function (d) { return d.text ;})
-      .append('br') 
+      .append('br')
+
+    //Select Chart 2 x-axis variable:
+    chart5
+      d3.select('#xAxis2Text')              
+      .append('select')
+      .attr('id','xSelect')
+      .on('change', xChange2)
+      .selectAll('option')
+      .data(selectData)
+      .enter()
+      .append('option')
+      .attr('value', function (d) { return d.text })
+      .text(function (d) { return d.text ;})
+      .append('br')                 
+
+    //Select Chart 2 y-axis variable:
+    chart5
+      d3.select('#yAxis2Text') 
+      .append('select')
+      .attr('id','ySelect')
+      .on('change', yChange2)
+      .selectAll('option')
+      .data(selectData)
+      .enter()
+      .append('option')
+      .attr('value', function (d) { return d.text })
+      .text(function (d) { return d.text ;})
+      .append('br')    
     
     var selectFilter = [ {'text':'None'},	
 	    {'text' : 'Public'},
@@ -130,7 +156,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 	.text(function (d) { return d.text ;})
 	body.append('br')
     
-        //Legend
+    //Legend
     body.append('br')
     body.append('span')
       .text("Legend")
@@ -229,40 +255,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
           .attr('cx',function (d) { return xScale(d[value]) })
-    }
-
-
-    var spanChart2 = body.append('span')
-      .text("Chart 2:")  
-      body.append('br')             
-
-    //Select x-axis variable:               
-    var spanTextX2 = body.append('span')
-      .text("Select X-Axis Variable: ")
-    var input3 = body.append('select')
-      .attr('id','xSelect')
-      .on('change', xChange2)
-      .selectAll('option')
-      .data(selectData)
-      .enter()
-      .append('option')
-      .attr('value', function (d) { return d.text })
-      .text(function (d) { return d.text ;})
-    body.append('br')                 
-
-    //Select y-axis variable:
-    var spanTextY2 = body.append('span')
-      .text("Select Y-Axis Variable: ")
-    var input4 = body.append('select')
-      .attr('id','ySelect')
-      .on('change', yChange2)
-      .selectAll('option')
-      .data(selectData)
-      .enter()
-      .append('option')
-      .attr('value', function (d) { return d.text })
-      .text(function (d) { return d.text ;})
-    body.append('br') 
+    } 
 
     //Function to change yAxis:
     function yChange2() {

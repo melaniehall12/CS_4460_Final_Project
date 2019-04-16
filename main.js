@@ -112,7 +112,6 @@ d3.csv('./data/colleges.csv', function(csv) {
       .text(function (d) { return d.text ;})
       .append('br') 
 
-   }
     //Function to change yAxis:
     function yChange() {
       var value = this.value //Get the new 'y' value.

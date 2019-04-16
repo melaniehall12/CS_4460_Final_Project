@@ -1,4 +1,4 @@
-//Final Project: "A 'School' Look At Data"
+//Final Project: "College Stats Across the U.S."
 //CS 4460: P5
 //Group: Chianne Connelly (903047323), Melanie Hall (903112239), and Wheezy Menk (903104394)
 //Data: 'colleges.csv;
@@ -19,6 +19,15 @@ d3.csv('./data/colleges.csv', function(csv) {
         csv[i].AdmissionRate = Number(csv[i].AdmissionRate);
         csv[i].UndergradPop = Number(csv[i].UndergradPop);
         csv[i].MedDebtWithdraw = Number(csv[i].MedDebtWithdraw);
+        csv[i].percentWhite = Number(csv[i].percentWhite);
+        csv[i].percentBlack = Number(csv[i].percentBlack);
+        csv[i].percentHispanic = Number(csv[i].percentHispanic);
+        csv[i].percentAsian = Number(csv[i].percentAsian);
+        csv[i].percentIndian = Number(csv[i].percentIndian);
+        csv[i].percentIslander = Number(csv[i].percentIslander);
+        csv[i].percentBiracial = Number(csv[i].percentBiracial);
+        csv[i].percentAlien = Number(csv[i].percentAlien);
+        csv[i].partTime = Number(csv[i].partTime);
         csv[i].Name = csv[i].Name;
         csv[i].Control = csv[i].Control;
         csv[i].Region = csv[i].Region;
@@ -54,8 +63,22 @@ d3.csv('./data/colleges.csv', function(csv) {
       ])
       .range([570, 30])
  
-    var xScale2 = d3.scaleLinear().domain(MedDebtGradExtent).range([50, 570]);
-    var yScale2 = d3.scaleLinear().domain(MeanEarnAfter8Extent).range([570, 30]);
+    // var xScale2 = d3.scaleLinear().domain(MedDebtGradExtent).range([50, 570]);
+    // var yScale2 = d3.scaleLinear().domain(MeanEarnAfter8Extent).range([570, 30]);
+
+    var xScale2 = d3.scaleLinear()
+      .domain([
+      d3.min([0,d3.min(csv,function (d) { return d['percentWhite'] })]),
+      d3.max([0,d3.max(csv,function (d) { return d['percentWhite'] })])
+      ])
+    .range([50, 570])
+
+    var yScale2 = d3.scaleLinear()
+      .domain([
+      d3.min([0,d3.min(csv,function (d) { return d['partTime'] })]),
+      d3.max([0,d3.max(csv,function (d) { return d['partTime'] })])
+      ])
+      .range([570, 30])
      
     var xAxis = d3.axisBottom().scale(xScale);
     var yAxis = d3.axisLeft().scale(yScale);
@@ -63,24 +86,38 @@ d3.csv('./data/colleges.csv', function(csv) {
     var xAxis2 = d3.axisBottom().scale(xScale2);
     var yAxis2 = d3.axisLeft().scale(yScale2);
 
-    var comma = d3.format(","); //Places comman in numbers that require it.
+    var comma = d3.format(","); //Places comma in numbers that require it.
     var formatPercent = d3.format('.2%');
 
-    var body = d3.select('body')
+    //Drop down for both charts:
     var selectFilter = [ {'text':'None'},
                         {'text' : 'Public'},
                         {'text': 'Private'},
                         ]
-    var selectData = [ { "text" : "ACTMedian" },
-                     { "text" : "AdmissionRate" },
-                     { "text" : "AverageCost" },
-                     { "text" : "MedDebtGrad" },
-                     { "text" : "MedDebtWithdraw" },
-                     { "text" : "MeanEarnAfter8" },
-                     { "text" : "RetentionRate" },
-                     { "text" : "SATAvg" },
-                     { "text" : "UndergradPop" },
-                   ]             
+
+    //Drop down for Chart 1:                    
+    var selectData = [ { "text" : "ACT Median" },
+                     { "text" : "Admission Rate" },
+                     { "text" : "Average Cost" },
+                     { "text" : "Median Debt On Graduation" },
+                     { "text" : "Median Debt On Withdrawal" },
+                     { "text" : "Mean Earnings 8 Years After Entry" },
+                     { "text" : "Retention Rate" },
+                     { "text" : "SAT Average" },
+                     { "text" : "Undergraduate Population" },
+    ]
+
+    //Drop down for Chart 2:
+    var selectData2 = [ { "text" : "% of White Students" },
+                     { "text" : "% of Black Students" },
+                     { "text" : "% of Hispanic Students" },
+                     { "text" : "% of Asian Students" },
+                     { "text" : "% of American Indian Students" },
+                     { "text" : "% of Pacific Islander Students" },
+                     { "text" : "% of Biracial Students" },
+                     { "text" : "% of Nonresident Aliens" },
+                     { "text" : "% of Part-Time Undergraduates" },
+    ]                         
 
     //Select Chart 1 x-axis variable:
     chart4
@@ -117,7 +154,7 @@ d3.csv('./data/colleges.csv', function(csv) {
       .attr('id','xSelect')
       .on('change', xChange2)
       .selectAll('option')
-      .data(selectData)
+      .data(selectData2)
       .enter()
       .append('option')
       .attr('value', function (d) { return d.text })
@@ -131,65 +168,98 @@ d3.csv('./data/colleges.csv', function(csv) {
       .attr('id','ySelect')
       .on('change', yChange2)
       .selectAll('option')
-      .data(selectData)
+      .data(selectData2)
       .enter()
       .append('option')
       .attr('value', function (d) { return d.text })
       .text(function (d) { return d.text ;})
-      .append('br')    
-    
-    var selectFilter = [ {'text':'None'},	
-	    {'text' : 'Public'},
-	    {'text': 'Private'},
-	    ]
+      .append('br') 
 
-    var spanTextFilter = body.append('span')	
-	.text("Select Filter: ")
-	var input = body.append('select')
-	.attr('id','FilterSelect')
-	.on('change', filter)
-	.selectAll('option')
-	.data(selectFilter)
-	.enter()
-	.append('option')
-	.attr('value', function (d) { return d.text })
-	.text(function (d) { return d.text ;})
-	body.append('br')
+    //Legend and filter set-up:
+    var chart6 = d3.select("#chart6")
+                    .append("svg:svg")
+                    .attr("width",150)
+                    .attr("height",150);
+
+    chart6
+      d3.select('#filter')
+    	.append('select')
+    	.attr('id','FilterSelect')
+    	.on('change', filter)
+    	.selectAll('option')
+    	.data(selectFilter)
+    	.enter()
+    	.append('option')
+    	.attr('value', function (d) { return d.text })
+    	.text(function (d) { return d.text ;})
+    	.append('br')
     
-    //Legend
-    body.append('br')
-    body.append('span')
-      .text("Legend")
-      body.append('br')
-    var legend = d3.select("body")
-                  .append("svg")
-                  .attr("width", 150)
-                  .attr("height", 150);
-    legend.append('rect')
+    chart6
+    d3.select("#public")
+    .append('rect')
           .attr('x', 20)
           .attr('y',10)
           .attr('width',20)
           .attr('height',10)
-          .attr('fill','#ffae3d');
-    legend.append('text')
-            .attr('x', 50)
-            .attr('y', 20)
-            .text('Public');
-    legend.append('rect')
+          .attr('fill','#ffae3d')
+    d3.select("#private")
+    .append('rect')
           .attr('x', 20)
           .attr('y',30)
           .attr('width',20)
           .attr('height',10)
-          .attr('fill','#0209e5');
-    legend.append('text')
-            .attr('x', 50)
-            .attr('y',40)
-            .text('Private');
+          .attr('fill','#0209e5')
+
+
+  //   var spanTextFilter = body.append('span')  
+  // .text("Select Filter: ")
+  // var input = body.append('select')
+  // .attr('id','FilterSelect')
+  // .on('change', filter)
+  // .selectAll('option')
+  // .data(selectFilter)
+  // .enter()
+  // .append('option')
+  // .attr('value', function (d) { return d.text })
+  // .text(function (d) { return d.text ;})
+  // body.append('br')
     
-    //Filters based on private/public
+  //   //Legend
+  //   body.append('br')
+  //   body.append('span')
+  //     .text("Legend")
+  //     body.append('br')
+  //   var legend = d3.select("body")
+  //                 .append("svg")
+  //                 .attr("width", 150)
+  //                 .attr("height", 150);
+  //   legend.append('rect')
+  //         .attr('x', 20)
+  //         .attr('y',10)
+  //         .attr('width',20)
+  //         .attr('height',10)
+  //         .attr('fill','#ffae3d');
+  //   legend.append('text')
+  //           .attr('x', 50)
+  //           .attr('y', 20)
+  //           .text('Public');
+  //   legend.append('rect')
+  //         .attr('x', 20)
+  //         .attr('y',30)
+  //         .attr('width',20)
+  //         .attr('height',10)
+  //         .attr('fill','#0209e5');
+  //   legend.append('text')
+  //           .attr('x', 50)
+  //           .attr('y',40)
+  //           .text('Private');      
+
+//---------------FUNCTIONS--------------------        
+    
+   //Filter based on private/public type:
    function filter() {
       var value = this.value;
-      if (value!='None'){
+      if (value !='None'){
         d3.selectAll('circle')
           .filter(function(d){
             return d.Control != value;
@@ -212,33 +282,40 @@ d3.csv('./data/colleges.csv', function(csv) {
           .style("opacity", 0.8)
           .attr('stroke-width',1);
       }
-
    }
-
-    //Function to change yAxis:
-    function yChange() {
-      var value = this.value //Get the new 'y' value.
-      yScale //Change the yScale.
-        .domain([
-          d3.min([0,d3.min(csv,function (d) { return d[value] })]),
-          d3.max([0,d3.max(csv,function (d) { return d[value] })])
-          ])
-      console.log("is this working?");  
-      yAxis.scale(yScale) //Change the yScale.
-      d3.select('#yAxis') //Redraw the yAxis.
-        .transition().duration(1000)
-        .call(yAxis)
-      d3.select('#yAxisLabel') //Change the yAxisLabel.
-        .text(value)    
-      d3.selectAll('circle') //Move the circles.
-        .transition().duration(50)
-        .delay(function (d,i) { return i * 10})
-          .attr('cy',function (d) { return yScale(d[value]) })
-    }
 
     //Function to change xAxis:
     function xChange() {
       var value = this.value //Get the new 'x' value.
+      var axisTitle = '';
+      if (value == 'ACT Median') {
+        axisTitle = 'ACT Median';
+        value = 'ACTMedian';
+      } else if (value == 'Admission Rate') {
+        axisTitle = 'Admission Rate (%)';
+        value = 'AdmissionRate';
+      } else if (value == 'Average Cost') {
+        axisTitle = 'Average Cost ($)';
+        value = 'AverageCost';
+      } else if (value == 'Median Debt On Graduation') {
+        axisTitle = 'Median Debt On Graduation ($)';
+        value = 'MedDebtGrad';
+      } else if (value == 'Median Debt On Withdrawal') {
+        axisTitle = 'Median Debt On Withdrawal ($)';
+        value = 'MedDebtGrad';
+      } else if (value == 'Mean Earnings 8 Years After Entry') {
+        axisTitle = 'Mean Earnings ($)';
+        value = 'MeanEarnAfter8';
+      } else if (value == 'Retention Rate') {
+        axisTitle = 'Retention Rate (%)';
+        value = 'RetentionRate';
+      } else if (value == 'SAT Average') {
+        axisTitle = 'SAT Average';
+        value = 'SATAvg';
+      } else if (value == 'Undergraduate Population') {
+        axisTitle = 'Undergraduate Population';
+        value = 'UndergradPop';
+      }     
       xScale //Change the xScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -250,7 +327,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         .call(xAxis)
       d3.select('#xAxisLabel') //Change the xAxisLabel.
         .transition().duration(1000)
-        .text(value)
+        .text(axisTitle)
       d3.selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
@@ -258,29 +335,86 @@ d3.csv('./data/colleges.csv', function(csv) {
     } 
 
     //Function to change yAxis:
-    function yChange2() {
+    function yChange() {
       var value = this.value //Get the new 'y' value.
-      yScale2 //Change the yScale.
+      var axisTitle = '';
+      if (value == 'ACT Median') {
+        axisTitle = 'ACT Median';
+        value = 'ACTMedian';
+      } else if (value == 'Admission Rate') {
+        axisTitle = 'Admission Rate (%)';
+        value = 'AdmissionRate';
+      } else if (value == 'Average Cost') {
+        axisTitle = 'Average Cost ($)';
+        value = 'AverageCost';
+      } else if (value == 'Median Debt On Graduation') {
+        axisTitle = 'Median Debt On Graduation ($)';
+        value = 'MedDebtGrad';
+      } else if (value == 'Median Debt On Withdrawal') {
+        axisTitle = 'Median Debt On Withdrawal ($)';
+        value = 'MedDebtGrad';
+      } else if (value == 'Mean Earnings 8 Years After Entry') {
+        axisTitle = 'Mean Earnings ($)';
+        value = 'MeanEarnAfter8';
+      } else if (value == 'Retention Rate') {
+        axisTitle = 'Retention Rate (%)';
+        value = 'RetentionRate';
+      } else if (value == 'SAT Average') {
+        axisTitle = 'SAT Average';
+        value = 'SATAvg';
+      } else if (value == 'Undergraduate Population') {
+        axisTitle = 'Undergraduate Population';
+        value = 'UndergradPop';
+      }     
+      yScale //Change the yScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
           d3.max([0,d3.max(csv,function (d) { return d[value] })])
           ])
-      console.log("is this working?");  
-      yAxis2.scale(yScale2) //Change the yScale.
-      d3.select('#yAxis2') //Redraw the yAxis.
+      yAxis.scale(yScale) //Change the yScale.
+      d3.select('#yAxis') //Redraw the yAxis.
         .transition().duration(1000)
-        .call(yAxis2)
-      d3.select('#yAxisLabel2') //Change the yAxisLabel.
-        .text(value)    
+        .call(yAxis)
+      d3.select('#yAxisLabel') //Change the yAxisLabel.
+        .text(axisTitle)    
       d3.selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cy',function (d) { return yScale2(d[value]) })
+          .attr('cy',function (d) { return yScale(d[value]) })
     }
 
-    //Function to change xAxis:
+    //Function to change xAxis2:
     function xChange2() {
       var value = this.value //Get the new 'x' value.
+      var axisTitle = '';
+      if (value == '% of White Students') {
+        axisTitle = 'Whites (%)';
+        value = 'percentWhite';
+      } else if (value == '% of Black Students') {
+        axisTitle = 'Blacks (%)';
+        value = 'percentBlack';
+      } else if (value == '% of Hispanic Students') {
+        axisTitle = 'Hispanics (%)';
+        value = 'percentHispanic';
+      } else if (value == '% of Asian Students') {
+        axisTitle = 'Asians (%)';
+        value = 'percentAsian';
+      } else if (value == '% of American Indian Students') {
+        axisTitle = 'American Indians (%)';
+        value = 'percentIndian';
+      } else if (value == '% of Pacific Islander Students') {
+        axisTitle = 'Pacific Islanders (%)';
+        value = 'percentIslander';
+      } else if (value == '% of Biracial Students') {
+        axisTitle = 'Biracial (%)';
+        value = 'percentBiracial';
+      } else if (value == '% of Nonresident Aliens') {
+        axisTitle = 'Nonresident Aliens (%)';
+        value = 'percentAlien';
+      } else if (value == '% of Part-Time Undergraduates') {
+        axisTitle = 'Part-Time Undergrads(%)';
+        value = 'partTime';
+      }     
       xScale2 //Change the xScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -292,13 +426,62 @@ d3.csv('./data/colleges.csv', function(csv) {
         .call(xAxis2)
       d3.select('#xAxisLabel2') //Change the xAxisLabel.
         .transition().duration(1000)
-        .text(value)
+        .text(axisTitle)
       d3.selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
           .attr('cx',function (d) { return xScale2(d[value]) })
     }
-    
+
+    //Function to change yAxis2:
+    function yChange2() {
+      var value = this.value //Get the new 'y' value.
+      var axisTitle = '';
+      if (value == '% of White Students') {
+        axisTitle = 'Whites (%)';
+        value = 'percentWhite';
+      } else if (value == '% of Black Students') {
+        axisTitle = 'Blacks (%)';
+        value = 'percentBlack';
+      } else if (value == '% of Hispanic Students') {
+        axisTitle = 'Hispanics (%)';
+        value = 'percentHispanic';
+      } else if (value == '% of Asian Students') {
+        axisTitle = 'Asians (%)';
+        value = 'percentAsian';
+      } else if (value == '% of American Indian Students') {
+        axisTitle = 'American Indians (%)';
+        value = 'percentIndian';
+      } else if (value == '% of Pacific Islander Students') {
+        axisTitle = 'Pacific Islanders (%)';
+        value = 'percentIslander';
+      } else if (value == '% of Biracial Students') {
+        axisTitle = 'Biracial (%)';
+        value = 'percentBiracial';
+      } else if (value == '% of Nonresident Aliens') {
+        axisTitle = 'Nonresident Aliens (%)';
+        value = 'percentAlien';
+      } else if (value == '% of Part-Time Undergraduates') {
+        axisTitle = 'Part-Time Undergrads(%)';
+        value = 'partTime';
+      }     
+      yScale2 //Change the yScale.
+        .domain([
+          d3.min([0,d3.min(csv,function (d) { return d[value] })]),
+          d3.max([0,d3.max(csv,function (d) { return d[value] })])
+          ]) 
+      yAxis2.scale(yScale2) //Change the yScale.
+      d3.select('#yAxis2') //Redraw the yAxis.
+        .transition().duration(1000)
+        .call(yAxis2)
+      d3.select('#yAxisLabel2') //Change the yAxisLabel.
+        .text(axisTitle)    
+      d3.selectAll('circle') //Move the circles.
+        .transition().duration(50)
+        .delay(function (d,i) { return i * 10})
+          .attr('cy',function (d) { return yScale2(d[value]) })
+    }
+ 
     //Axis labels:
     //Create SVGs for charts:
     var chart1 = d3.select("#chart1")
@@ -361,7 +544,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         .style("font-size", "14px")
         .style("text-anchor", "end")
         .style("fill", "black")
-        .text("Median Debt ($)");
+        .text("Whites (%)");
 
     chart2
         .append("g")
@@ -378,12 +561,12 @@ d3.csv('./data/colleges.csv', function(csv) {
         .style("font-size", "14px")
         .style("text-anchor", "end")
         .style("fill", "black")
-        .text("Mean Earnings ($)");                            
+        .text("Part-Time Undergrads (%)");                            
         
 
-    //---------------BRUSH CODE--------------------
+//---------------BRUSH CODE--------------------
 
-    //---------------FIRST BRUSH-------------------
+//---------------FIRST BRUSH-------------------
 
     var brushContainerG = chart1.append('g')
               .attr('id', 'brush-container');         
@@ -472,15 +655,15 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-          var cx = xScale(d['MedDebtGrad']);
-          var cy = yScale(d['MeanEarnAfter8']);
+          var cx = xScale(d['percentWhite']);
+          var cy = yScale(d['partTime']);
           return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });
 
       d3.selectAll('circle')
         .classed('selected2', function(d) {
-          var cx = xScale2(d['MedDebtGrad']);
-          var cy = yScale2(d['MeanEarnAfter8']);
+          var cx = xScale2(d['percentWhite']);
+          var cy = yScale2(d['partTime']);
           return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });       
     }
@@ -603,8 +786,8 @@ d3.csv('./data/colleges.csv', function(csv) {
       })
        .attr("stroke", "black")
        .style("opacity", 0.8)
-       .attr("cx", function(d) { return xScale2(d.MedDebtGrad); })
-       .attr("cy", function(d) { return yScale2(d.MeanEarnAfter8); })
+       .attr("cx", function(d) { return xScale2(d.percentWhite); })
+       .attr("cy", function(d) { return yScale2(d.partTime); })
        .attr("r", 10)
        .on("click", function(d,i){
         clearSelected();

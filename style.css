@@ -36,9 +36,9 @@ path.domain {
 }
 #chart3 {
 	float:left;
-	margin-top: 100px;
-	margin-left: 20px;
-	margin-bottom: 20px;
+	margin-left: 650px;
+	margin-bottom: 120px;
+	margin-top: -35px;
 }
 #chart4 {
 	margin-left: 200px;
@@ -46,6 +46,10 @@ path.domain {
 #chart5 {
     margin-left: 800px;
     margin-top: -60px;
+}
+#chart6 {
+	margin-left: 450px;
+	margin-top: 80px;
 }
 #collegeSelector {
 	float: left;

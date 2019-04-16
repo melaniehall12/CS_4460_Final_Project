@@ -111,6 +111,83 @@ d3.csv('./data/colleges.csv', function(csv) {
       .attr('value', function (d) { return d.text })
       .text(function (d) { return d.text ;})
       .append('br') 
+    
+    var selectFilter = [ {'text':'None'},	
+	    {'text' : 'Public'},
+	    {'text': 'Private'},
+	    ]
+
+    var spanTextFilter = body.append('span')	
+	.text("Select Filter: ")
+	var input = body.append('select')
+	.attr('id','FilterSelect')
+	.on('change', filter)
+	.selectAll('option')
+	.data(selectFilter)
+	.enter()
+	.append('option')
+	.attr('value', function (d) { return d.text })
+	.text(function (d) { return d.text ;})
+	body.append('br')
+    
+        //Legend
+    body.append('br')
+    body.append('span')
+      .text("Legend")
+      body.append('br')
+    var legend = d3.select("body")
+                  .append("svg")
+                  .attr("width", 150)
+                  .attr("height", 150);
+    legend.append('rect')
+          .attr('x', 20)
+          .attr('y',10)
+          .attr('width',20)
+          .attr('height',10)
+          .attr('fill','#ffae3d');
+    legend.append('text')
+            .attr('x', 50)
+            .attr('y', 20)
+            .text('Public');
+    legend.append('rect')
+          .attr('x', 20)
+          .attr('y',30)
+          .attr('width',20)
+          .attr('height',10)
+          .attr('fill','#0209e5');
+    legend.append('text')
+            .attr('x', 50)
+            .attr('y',40)
+            .text('Private');
+    
+    //Filters based on private/public
+   function filter() {
+      var value = this.value;
+      if (value!='None'){
+        d3.selectAll('circle')
+          .filter(function(d){
+            return d.Control != value;
+          })
+          .transition()
+          .style("opacity", 0);
+        d3.selectAll('circle')
+          .filter(function(d){
+            return d.Control == value;
+          })
+          .transition()
+          .style("opacity", 0.8)
+          .attr('stroke-width',1);
+      } else {
+        d3.selectAll('circle')
+          .filter(function(d){
+            return true;
+          })
+          .transition()
+          .style("opacity", 0.8)
+          .attr('stroke-width',1);
+      }
+
+   }
 
     //Function to change yAxis:
     function yChange() {

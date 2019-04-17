@@ -314,10 +314,10 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.select('#xAxisLabel') //Change the xAxisLabel.
         .transition().duration(1000)
         .text(axisTitle)
-      d3.selectAll('circle') //Move the circles.
+      d3.select('#chart1').selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cx',function (d) { return xScale(d[value]) })   
+          .attr('cx',function (d) { return xScale(d[value]) })
     }
 
     //Function to change yAxis:
@@ -365,7 +365,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         .call(yAxis)
       d3.select('#yAxisLabel') //Change the yAxisLabel.
         .text(axisTitle)
-      d3.selectAll('circle') //Move the circles.
+      d3.select('#chart1').selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
           .attr('cy',function (d) { return yScale(d[value]) })
@@ -417,7 +417,8 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.select('#xAxisLabel2') //Change the xAxisLabel.
         .transition().duration(1000)
         .text(axisTitle)
-      d3.selectAll('circle') //Move the circles.
+      d3.select('#chart2')
+        .selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
           .attr('cx',function (d) { return xScale2(d[value]) })
@@ -468,7 +469,8 @@ d3.csv('./data/colleges.csv', function(csv) {
         .call(yAxis2)
       d3.select('#yAxisLabel2') //Change the yAxisLabel.
         .text(axisTitle)
-      d3.selectAll('circle') //Move the circles.
+      d3.select('#chart2')
+        .selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
           .attr('cy',function (d) { return yScale2(d[value]) })
@@ -602,7 +604,7 @@ d3.csv('./data/colleges.csv', function(csv) {
               return left <= cx && cx <= right && top <= cy && cy <= bottom;
             } else {
               var cy = yScale(d['SATAvg']);
-            } 
+            }
             return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });
 
@@ -619,7 +621,7 @@ d3.csv('./data/colleges.csv', function(csv) {
               changedY = 0;
             } else {
               var cy = yScale(d['SATAvg']);
-            } 
+            }
             return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });
     }
@@ -669,16 +671,16 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.selectAll('circle')
         .classed('selected', function(d) {
             if (Boolean(changedX2)) {
-              var cx = xScale(d[axisValX2]); 
-              changedX2 = 0; 
+              var cx = xScale(d[axisValX2]);
+              changedX2 = 0;
             } else {
               var cx = xScale(d['percentWhite']);
-            } 
+            }
             if (Boolean(changedY2)) {
-              var cy = yScale(d[axisValY2]); 
-              changedY2 = 0; 
+              var cy = yScale(d[axisValY2]);
+              changedY2 = 0;
             } else {
-              var cy = yScale(d['partTime']);  
+              var cy = yScale(d['partTime']);
             }
             return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });
@@ -687,16 +689,16 @@ d3.csv('./data/colleges.csv', function(csv) {
         .classed('selected2', function(d) {
             if (Boolean(changedX2)) {
               var cx = xScale2(d[axisValX2]);
-              changedX2 = 0;  
+              changedX2 = 0;
             } else {
               var cx = xScale2(d['percentWhite']);
-            } 
+            }
             if (Boolean(changedY2)) {
-              var cy = yScale2(d[axisValY2]); 
-              changedY2 = 0; 
+              var cy = yScale2(d[axisValY2]);
+              changedY2 = 0;
             } else {
-              var cy = yScale2(d['partTime']);  
-            } 
+              var cy = yScale2(d['partTime']);
+            }
             return left <= cx && cx <= right && top <= cy && cy <= bottom;
         });
     }

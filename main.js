@@ -41,6 +41,11 @@ d3.csv('./data/colleges.csv', function(csv) {
         csv[i].Name = csv[i].Name;
         csv[i].Control = csv[i].Control;
         csv[i].Region = csv[i].Region;
+        csv[i].cy1 = 0;
+        csv[i].cx1 = 0;
+        csv[i].cy2 =0;
+        csv[i].cx2 = 0
+
     }
 
     //Make extents:
@@ -317,7 +322,9 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.select('#chart1').selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cx',function (d) { return xScale(d[value]) })
+          .attr('cx',function (d) {
+            d.cx1 = xScale(d[value]);
+            return d.cx1; })
     }
 
     //Function to change yAxis:
@@ -368,7 +375,9 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.select('#chart1').selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cy',function (d) { return yScale(d[value]) })
+          .attr('cy',function (d) {
+            d.cy1 = yScale(d[value])
+            return d.cy1; })
     }
 
     //Function to change xAxis2:
@@ -421,7 +430,9 @@ d3.csv('./data/colleges.csv', function(csv) {
         .selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cx',function (d) { return xScale2(d[value]) })
+          .attr('cx',function (d) {
+            d.cx2 = xScale2(d[value]);
+            return  d.cx2;})
     }
 
     //Function to change yAxis2:
@@ -473,7 +484,9 @@ d3.csv('./data/colleges.csv', function(csv) {
         .selectAll('circle') //Move the circles.
         .transition().duration(50)
         .delay(function (d,i) { return i * 10})
-          .attr('cy',function (d) { return yScale2(d[value]) })
+          .attr('cy',function (d) {
+            d.cy2 = yScale2(d[value]);
+            return d.cy2; })
     }
 
     //Axis labels:
@@ -592,7 +605,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-            if (Boolean(changedX)) {
+            /**if (Boolean(changedX)) {
               var cx = xScale(d[axisValX]);
               return left <= cx && cx <= right && top <= cy && cy <= bottom;
             } else {
@@ -604,13 +617,13 @@ d3.csv('./data/colleges.csv', function(csv) {
               return left <= cx && cx <= right && top <= cy && cy <= bottom;
             } else {
               var cy = yScale(d['SATAvg']);
-            }
-            return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            }**/
+            return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-            if (Boolean(changedX)) {
+            /**if (Boolean(changedX)) {
               var cx = xScale(d[axisValX]);
               changedX = 0;
             } else {
@@ -621,8 +634,8 @@ d3.csv('./data/colleges.csv', function(csv) {
               changedY = 0;
             } else {
               var cy = yScale(d['SATAvg']);
-            }
-            return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            }**/
+            return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
     }
 
@@ -670,7 +683,8 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-            if (Boolean(changedX2)) {
+
+            /**if (Boolean(changedX2)) {
               var cx = xScale(d[axisValX2]);
               changedX2 = 0;
             } else {
@@ -681,13 +695,14 @@ d3.csv('./data/colleges.csv', function(csv) {
               changedY2 = 0;
             } else {
               var cy = yScale(d['partTime']);
-            }
-            return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            }**/
+            return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
+
 
       d3.selectAll('circle')
         .classed('selected2', function(d) {
-            if (Boolean(changedX2)) {
+            /**if (Boolean(changedX2)) {
               var cx = xScale2(d[axisValX2]);
               changedX2 = 0;
             } else {
@@ -699,7 +714,8 @@ d3.csv('./data/colleges.csv', function(csv) {
             } else {
               var cy = yScale2(d['partTime']);
             }
-            return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            **/
+            return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
     }
 
@@ -765,8 +781,12 @@ d3.csv('./data/colleges.csv', function(csv) {
       })
        .attr("stroke", "black")
        .style("opacity", 0.8)
-       .attr("cx", function(d) { return xScale(d.ACTMedian); })
-       .attr("cy", function(d) { return yScale(d.SATAvg); })
+       .attr("cx", function(d) {
+          d.cx1 = xScale(d.ACTMedian);
+        return d.cx1; })
+       .attr("cy", function(d) {
+          d.cy1 = yScale(d.SATAvg);
+        return d.cy1; })
        .attr("r", 10)
        .on("click", function(d,i){
         clearSelected();
@@ -822,8 +842,12 @@ d3.csv('./data/colleges.csv', function(csv) {
       })
        .attr("stroke", "black")
        .style("opacity", 0.8)
-       .attr("cx", function(d) { return xScale2(d.percentWhite); })
-       .attr("cy", function(d) { return yScale2(d.partTime); })
+       .attr("cx", function(d) {
+          d.cx2 =  xScale2(d.percentWhite);
+          return d.cx2; })
+       .attr("cy", function(d) {
+          d.cy2 = yScale2(d.partTime);
+        return d.cy2 })
        .attr("r", 10)
        .on("click", function(d,i){
         clearSelected();

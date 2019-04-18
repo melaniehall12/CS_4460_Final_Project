@@ -58,7 +58,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         } else if (csv[i].Region == 'Far West'){
           csv[i].RegionColor = '#D6DDA7'
         } else if (csv[i].Region == 'Outlying Areas'){
-          csv[i].RegionColor = '#F58C4C';
+          csv[i].RegionColor = '#1ADD29';
         } else {
           csv[i].RegionColor = '#000000';
         }
@@ -351,7 +351,9 @@ d3.csv('./data/colleges.csv', function(csv) {
            .attr('y',125)
            .attr('width',20)
            .attr('height',10)
-           .attr('fill', '#F58C4C')
+           .attr('fill', '#1ADD29')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
       legend.append('text')
              .attr('x', 40)
              .attr('y', 135)
@@ -370,20 +372,22 @@ d3.csv('./data/colleges.csv', function(csv) {
             return d.Control != value;
           })
           .transition()
-          .attr('r',0)
+          .style("r", 0);
         d3.selectAll('circle')
           .filter(function(d){
-            return d.Control == value;
+            return d.Region == value;
           })
           .transition()
-          .attr('r',10)
+          .style("r", 10);
+
       } else {
         d3.selectAll('circle')
           .filter(function(d){
             return true;
           })
           .transition()
-          .attr('r',10)
+          .style('r',10)
+
       }
    }
     function filter2() {
@@ -394,21 +398,22 @@ d3.csv('./data/colleges.csv', function(csv) {
             return d.Region != value;
           })
           .transition()
-          .attr('r',0)
+          .style("r", 0);
         d3.selectAll('circle')
           .filter(function(d){
             return d.Region == value;
           })
           .transition()
-          .attr('r',10)
+          .style("r", 10);
+
       } else {
         d3.selectAll('circle')
           .filter(function(d){
             return true;
           })
           .transition()
-          .attr('r',10)
-          
+          .style("r", 10)
+          .attr('stroke-width',1);
       }
    }
 

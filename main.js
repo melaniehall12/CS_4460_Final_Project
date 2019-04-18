@@ -50,7 +50,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         } else if (csv[i].Region == 'Great Lakes'){
           csv[i].RegionColor = '#E30808';
         } else if (csv[i].Region == 'Southeast'){
-          csv[i].RegionColor = '#F8B205';
+          csv[i].RegionColor = '#bd8aea';
         } else if (csv[i].Region == 'New England'){
           csv[i].RegionColor = '#FFFB03'
         }  else if (csv[i].Region == 'Great Plains'){
@@ -120,11 +120,12 @@ d3.csv('./data/colleges.csv', function(csv) {
     var comma = d3.format(","); //Places comma in numbers that require it.
     var formatPercent = d3.format('.2%');
 
-    //Drop down for both charts:
+    //Drop downs for both charts:
     var selectFilter = [ {'text':'None'},
                         {'text' : 'Public'},
                         {'text': 'Private'},
                         ]
+
     var selectFilter2 = [ {'text':'None'},
                         {'text' : 'Southwest'},
                         {'text': 'Rocky Mountains'},
@@ -297,13 +298,13 @@ d3.csv('./data/colleges.csv', function(csv) {
       legend.append('text')
              .attr('x', 40)
              .attr('y', 60)
-             .text('Greate Lakes');
+             .text('Great Lakes');
       legend.append('rect')
            .attr('x', 5)
            .attr('y',65)
            .attr('width',20)
            .attr('height',10)
-           .attr('fill', '#F8B205')
+           .attr('fill', '#bd8aea')
            .attr('opacity', 0.8)
            .attr('stroke', 'black');
       legend.append('text')
@@ -897,6 +898,8 @@ d3.csv('./data/colleges.csv', function(csv) {
             .text(d.ACTMedian)
         d3.select('#satavg')
             .text(d.SATAvg)
+        d3.select('#uPop')
+            .text(comma(d.UndergradPop))   
         d3.select('#meddebtgrad')
             .text("$" + comma(d.MedDebtGrad))
         d3.select('#meanearn8')
@@ -973,6 +976,8 @@ d3.csv('./data/colleges.csv', function(csv) {
             .text(d.ACTMedian)
         d3.select('#satavg')
             .text(d.SATAvg)
+        d3.select('#uPop')
+            .text(comma(d.UndergradPop))     
         d3.select('#meddebtgrad')
             .text("$" + comma(d.MedDebtGrad))
         d3.select('#meanearn8')

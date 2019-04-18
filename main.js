@@ -127,7 +127,7 @@ d3.csv('./data/colleges.csv', function(csv) {
                         ]
     var selectFilter2 = [ {'text':'None'},
                         {'text' : 'Southwest'},
-                        {'text': 'Rocky Mountians'},
+                        {'text': 'Rocky Mountains'},
                         {'text': 'Mid-Atlantic'},
                         {'text' : 'Great Lakes'},
                         {'text': 'Southeast'},

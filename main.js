@@ -370,22 +370,20 @@ d3.csv('./data/colleges.csv', function(csv) {
             return d.Control != value;
           })
           .transition()
-          .style("opacity", 0);
+          .attr('r',0)
         d3.selectAll('circle')
           .filter(function(d){
             return d.Control == value;
           })
           .transition()
-          .style("opacity", 0.8)
-          .attr('stroke-width',1);
+          .attr('r',10)
       } else {
         d3.selectAll('circle')
           .filter(function(d){
             return true;
           })
           .transition()
-          .style("opacity", 0.8)
-          .attr('stroke-width',1);
+          .attr('r',10)
       }
    }
     function filter2() {
@@ -396,22 +394,21 @@ d3.csv('./data/colleges.csv', function(csv) {
             return d.Region != value;
           })
           .transition()
-          .style("opacity", 0);
+          .attr('r',0)
         d3.selectAll('circle')
           .filter(function(d){
             return d.Region == value;
           })
           .transition()
-          .style("opacity", 0.8)
-          .attr('stroke-width',1);
+          .attr('r',10)
       } else {
         d3.selectAll('circle')
           .filter(function(d){
             return true;
           })
           .transition()
-          .style("opacity", 0.8)
-          .attr('stroke-width',1);
+          .attr('r',10)
+          
       }
    }
 

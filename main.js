@@ -41,6 +41,29 @@ d3.csv('./data/colleges.csv', function(csv) {
         csv[i].Name = csv[i].Name;
         csv[i].Control = csv[i].Control;
         csv[i].Region = csv[i].Region;
+        if (csv[i].Region == 'Southwest'){
+          csv[i].RegionColor = '#900303';
+        } else if (csv[i].Region == 'Rocky Mountains'){
+          csv[i].RegionColor = '#905F03';
+        } else if (csv[i].Region == 'Mid-Atlantic'){
+          csv[i].RegionColor = '#327834';
+        } else if (csv[i].Region == 'Great Lakes'){
+          csv[i].RegionColor = '#E30808';
+        } else if (csv[i].Region == 'Southeast'){
+          csv[i].RegionColor = '#F8B205';
+        } else if (csv[i].Region == 'New England'){
+          csv[i].RegionColor = '#FFFB03'
+        }  else if (csv[i].Region == 'Great Plains'){
+          csv[i].RegionColor = '#FB9BBD';
+        } else if (csv[i].Region == 'Far West'){
+          csv[i].RegionColor = '#D6DDA7'
+        } else if (csv[i].Region == 'Outlying Areas'){
+          csv[i].RegionColor = '#F58C4C';
+        } else {
+          csv[i].RegionColor = '#000000';
+        }
+
+
         csv[i].cy1 = 0;
         csv[i].cx1 = 0;
         csv[i].cy2 =0;
@@ -101,6 +124,17 @@ d3.csv('./data/colleges.csv', function(csv) {
     var selectFilter = [ {'text':'None'},
                         {'text' : 'Public'},
                         {'text': 'Private'},
+                        ]
+    var selectFilter2 = [ {'text':'None'},
+                        {'text' : 'Southwest'},
+                        {'text': 'Rocky Mountians'},
+                        {'text': 'Mid-Atlantic'},
+                        {'text' : 'Great Lakes'},
+                        {'text': 'Southeast'},
+                        {'text' : 'New England'},
+                        {'text': 'Great Plains'},
+                        {'text' : 'Far West'},
+                        {'text': 'Outlying Areas'},
                         ]
 
     //Drop down for Chart 1:
@@ -201,47 +235,129 @@ d3.csv('./data/colleges.csv', function(csv) {
     	.attr('value', function (d) { return d.text })
     	.text(function (d) { return d.text ;})
     	.append('br')
-
-    chart6
-    d3.select("#public")
-    .append('rect')
-          .attr('x', 20)
-          .attr('y',10)
-          .attr('width',20)
-          .attr('height',10)
-          .attr('fill','#ffae3d')
-    d3.select("#private")
-    .append('rect')
-          .attr('x', 20)
-          .attr('y',30)
-          .attr('width',20)
-          .attr('height',10)
-          .attr('fill','#0209e5')
-
+    d3.select('#filter2')
+      .append('select')
+      .attr('id','FilterSelect2')
+      .on('change', filter2)
+      .selectAll('option')
+      .data(selectFilter2)
+      .enter()
+      .append('option')
+      .attr('value', function (d) { return d.text })
+      .text(function (d) { return d.text ;})
+      .append('br')
      var legend = d3.select("#legend")
                    .append("svg")
-                   .attr("width", 150)
-                   .attr("height", 150);
+                   .attr("width", 300)
+                   .attr("height", 300);
      legend.append('rect')
-           .attr('x', 20)
-           .attr('y',10)
+           .attr('x', 5)
+           .attr('y',5)
            .attr('width',20)
            .attr('height',10)
-           .attr('fill','#ffae3d');
+           .attr('fill', '#900303')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
      legend.append('text')
-             .attr('x', 50)
-             .attr('y', 20)
-             .text('Public');
-     legend.append('rect')
-           .attr('x', 20)
-           .attr('y',30)
+             .attr('x', 40)
+             .attr('y', 15)
+             .text('Southwest');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',20)
            .attr('width',20)
            .attr('height',10)
-           .attr('fill','#0209e5');
-     legend.append('text')
-             .attr('x', 50)
-             .attr('y',40)
-             .text('Private');
+           .attr('fill', '#905F03')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 30)
+             .text('Rocky Mountains');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',35)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#327834')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 45)
+             .text('Mid-Atlantic');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',50)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#E30808')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 60)
+             .text('Greate Lakes');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',65)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#F8B205')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 75)
+             .text('Southeast');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',80)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#FFFB03')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 90)
+             .text('New England');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',95)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#FB9BBD')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 105)
+             .text('Great Plains');
+      legend.append('rect')
+           .attr('x',5)
+           .attr('y',110)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#D6DDA7')
+           .attr('opacity', 0.8)
+           .attr('stroke', 'black');
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 120)
+             .text('Far West');
+      legend.append('rect')
+           .attr('x', 5)
+           .attr('y',125)
+           .attr('width',20)
+           .attr('height',10)
+           .attr('fill', '#F58C4C')
+      legend.append('text')
+             .attr('x', 40)
+             .attr('y', 135)
+             .text('Outlying Areas');
+
+
 
 //---------------FUNCTIONS--------------------
 
@@ -258,6 +374,32 @@ d3.csv('./data/colleges.csv', function(csv) {
         d3.selectAll('circle')
           .filter(function(d){
             return d.Control == value;
+          })
+          .transition()
+          .style("opacity", 0.8)
+          .attr('stroke-width',1);
+      } else {
+        d3.selectAll('circle')
+          .filter(function(d){
+            return true;
+          })
+          .transition()
+          .style("opacity", 0.8)
+          .attr('stroke-width',1);
+      }
+   }
+    function filter2() {
+      var value = this.value;
+      if (value != 'None'){
+        d3.selectAll('circle')
+          .filter(function(d){
+            return d.Region != value;
+          })
+          .transition()
+          .style("opacity", 0);
+        d3.selectAll('circle')
+          .filter(function(d){
+            return d.Region == value;
           })
           .transition()
           .style("opacity", 0.8)
@@ -605,36 +747,12 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-            /**if (Boolean(changedX)) {
-              var cx = xScale(d[axisValX]);
-              return left <= cx && cx <= right && top <= cy && cy <= bottom;
-            } else {
-              var cx = xScale(d['ACTMedian']);
-              return left <= cx && cx <= right && top <= cy && cy <= bottom;
-            }
-            if (Boolean(changedY)) {
-              var cy = yScale(d[axisValY]);
-              return left <= cx && cx <= right && top <= cy && cy <= bottom;
-            } else {
-              var cy = yScale(d['SATAvg']);
-            }**/
             return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
-            /**if (Boolean(changedX)) {
-              var cx = xScale(d[axisValX]);
-              changedX = 0;
-            } else {
-              var cx = xScale(d['ACTMedian']);
-            }
-            if (Boolean(changedY)) {
-              var cy = yScale(d[axisValY]);
-              changedY = 0;
-            } else {
-              var cy = yScale(d['SATAvg']);
-            }**/
+
             return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
     }
@@ -684,37 +802,13 @@ d3.csv('./data/colleges.csv', function(csv) {
       d3.selectAll('circle')
         .classed('selected', function(d) {
 
-            /**if (Boolean(changedX2)) {
-              var cx = xScale(d[axisValX2]);
-              changedX2 = 0;
-            } else {
-              var cx = xScale(d['percentWhite']);
-            }
-            if (Boolean(changedY2)) {
-              var cy = yScale(d[axisValY2]);
-              changedY2 = 0;
-            } else {
-              var cy = yScale(d['partTime']);
-            }**/
             return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
 
 
       d3.selectAll('circle')
         .classed('selected2', function(d) {
-            /**if (Boolean(changedX2)) {
-              var cx = xScale2(d[axisValX2]);
-              changedX2 = 0;
-            } else {
-              var cx = xScale2(d['percentWhite']);
-            }
-            if (Boolean(changedY2)) {
-              var cy = yScale2(d[axisValY2]);
-              changedY2 = 0;
-            } else {
-              var cy = yScale2(d['partTime']);
-            }
-            **/
+
             return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
     }
@@ -761,10 +855,8 @@ d3.csv('./data/colleges.csv', function(csv) {
        .append("circle")
        .attr("id",function(d,i) {return i;} )
        .attr('fill',function (d,i) {
-            if (d.Control == 'Public'){
-              return '#ffae3d';
-            }
-            return '#0209e5';})
+            return d.RegionColor;
+          })
        .on('mouseover', function () {
         d3.select(this)
           .transition()
@@ -839,11 +931,8 @@ d3.csv('./data/colleges.csv', function(csv) {
        .append("circle")
        .attr("id",function(d,i) {return i;} )
        .attr('fill',function (d,i) {
-            if (d.Control == 'Public'){
-              return '#ffae3d';
-            }
-            return '#0209e5';
-        })
+            return d.RegionColor;
+          })
        .on('mouseover', function () {
         d3.select(this)
           .transition()

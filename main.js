@@ -7,6 +7,16 @@
 var width = 600;
 var height = 600;
 
+//Global vars for adjusting brush with axis variable changes:
+var changedX = 0; //Checks whether axis var has been changed.
+var changedY = 0;
+var changedX2 = 0;
+var changedY2 = 0;
+var axisValX;
+var axisValY;
+var axisValX2;
+var axisValY2;
+
 //Load in data:
 d3.csv('./data/colleges.csv', function(csv) {
     for (var i = 0; i < csv.length; ++i) {
@@ -265,6 +275,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 
     //Function to change xAxis:
     function xChange() {
+      changedX = 1;
       var value = this.value //Get the new 'x' value.
       var axisTitle = '';
       if (value == 'ACT Median') {
@@ -295,6 +306,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         axisTitle = 'Undergraduate Population';
         value = 'UndergradPop';
       }
+      axisValX = value;
       xScale //Change the xScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -317,6 +329,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 
     //Function to change yAxis:
     function yChange() {
+      changedY = 1;
       var value = this.value //Get the new 'y' value.
       var axisTitle = '';
       if (value == 'ACT Median') {
@@ -347,6 +360,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         axisTitle = 'Undergraduate Population';
         value = 'UndergradPop';
       }
+      axisValY = value;
       yScale //Change the yScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -368,6 +382,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 
     //Function to change xAxis2:
     function xChange2() {
+      changedX2 = 1;
       var value = this.value //Get the new 'x' value.
       var axisTitle = '';
       if (value == '% of White Students') {
@@ -398,6 +413,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         axisTitle = 'Part-Time Undergrads(%)';
         value = 'partTime';
       }
+      axisValX2 = value;
       xScale2 //Change the xScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -421,6 +437,7 @@ d3.csv('./data/colleges.csv', function(csv) {
 
     //Function to change yAxis2:
     function yChange2() {
+      changedY2 = 1;
       var value = this.value //Get the new 'y' value.
       var axisTitle = '';
       if (value == '% of White Students') {
@@ -451,6 +468,7 @@ d3.csv('./data/colleges.csv', function(csv) {
         axisTitle = 'Part-Time Undergrads(%)';
         value = 'partTime';
       }
+      axisValY2 = value;
       yScale2 //Change the yScale.
         .domain([
           d3.min([0,d3.min(csv,function (d) { return d[value] })]),
@@ -587,11 +605,36 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
+            /**if (Boolean(changedX)) {
+              var cx = xScale(d[axisValX]);
+              return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            } else {
+              var cx = xScale(d['ACTMedian']);
+              return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            }
+            if (Boolean(changedY)) {
+              var cy = yScale(d[axisValY]);
+              return left <= cx && cx <= right && top <= cy && cy <= bottom;
+            } else {
+              var cy = yScale(d['SATAvg']);
+            }**/
             return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
+            /**if (Boolean(changedX)) {
+              var cx = xScale(d[axisValX]);
+              changedX = 0;
+            } else {
+              var cx = xScale(d['ACTMedian']);
+            }
+            if (Boolean(changedY)) {
+              var cy = yScale(d[axisValY]);
+              changedY = 0;
+            } else {
+              var cy = yScale(d['SATAvg']);
+            }**/
             return left <= d.cx1 && d.cx1 <= right && top <= d.cy1 && d.cy1 <= bottom;
         });
     }
@@ -640,12 +683,38 @@ d3.csv('./data/colleges.csv', function(csv) {
 
       d3.selectAll('circle')
         .classed('selected', function(d) {
+
+            /**if (Boolean(changedX2)) {
+              var cx = xScale(d[axisValX2]);
+              changedX2 = 0;
+            } else {
+              var cx = xScale(d['percentWhite']);
+            }
+            if (Boolean(changedY2)) {
+              var cy = yScale(d[axisValY2]);
+              changedY2 = 0;
+            } else {
+              var cy = yScale(d['partTime']);
+            }**/
             return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
 
 
       d3.selectAll('circle')
         .classed('selected2', function(d) {
+            /**if (Boolean(changedX2)) {
+              var cx = xScale2(d[axisValX2]);
+              changedX2 = 0;
+            } else {
+              var cx = xScale2(d['percentWhite']);
+            }
+            if (Boolean(changedY2)) {
+              var cy = yScale2(d[axisValY2]);
+              changedY2 = 0;
+            } else {
+              var cy = yScale2(d['partTime']);
+            }
+            **/
             return left <= d.cx2 && d.cx2 <= right && top <= d.cy2 && d.cy2 <= bottom;
         });
     }
@@ -742,7 +811,26 @@ d3.csv('./data/colleges.csv', function(csv) {
             .text("$" + comma(d.AverageCost))
         d3.select('#retrate')
             .text(d.RetentionRate + "%")
+        d3.select('#white')
+            .text(Math.round(d.percentWhite) *100+'%')
+        d3.select('#black')
+            .text(Math.round(d.percentBlack *100)+'%')
+        d3.select('#hispanic')
+            .text(Math.round(d.percentHispanic *100)+'%')
+        d3.select('#asian')
+            .text(Math.round(d.percentAsian *100)+'%')
+        d3.select('#indian')
+            .text(Math.round(d.percentIndian *100)+'%')
+        d3.select('#islander')
+            .text(Math.round(d.percentIslander *100)+'%')
+        d3.select('#biracial')
+            .text(Math.round(d.percentBiracial *100)+'%')
+        d3.select('#alien')
+            .text(Math.round(d.percentAlien *100)+'%')
+        d3.select('#parttime')
+            .text(Math.round(d.partTime *100)+'%' )
         checkChart2(d);
+        d3.select(this).raise().classed
        });
 
     var temp2 = chart2.selectAll("circle")
@@ -802,6 +890,26 @@ d3.csv('./data/colleges.csv', function(csv) {
             .text("$" + comma(d.AverageCost))
         d3.select('#retrate')
             .text(d.RetentionRate + "%")
+                d3.select(this)
+            .classed('selected2', true)
+        d3.select('#white')
+            .text(Math.round(d.percentWhite) *100+'%')
+        d3.select('#black')
+            .text(Math.round(d.percentBlack *100)+'%')
+        d3.select('#hispanic')
+            .text(Math.round(d.percentHispanic *100)+'%')
+        d3.select('#asian')
+            .text(Math.round(d.percentAsian *100)+'%')
+        d3.select('#indian')
+            .text(Math.round(d.percentIndian *100)+'%')
+        d3.select('#islander')
+            .text(Math.round(d.percentIslander *100)+'%')
+        d3.select('#biracial')
+            .text(Math.round(d.percentBiracial *100)+'%')
+        d3.select('#alien')
+            .text(Math.round(d.percentAlien *100)+'%')
+        d3.select('#parttime')
+            .text(Math.round(d.partTime *100)+'%' )
         checkChart1(d);
        });
 });

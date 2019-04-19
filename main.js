@@ -118,7 +118,6 @@ d3.csv('./data/colleges.csv', function(csv) {
     var yAxis2 = d3.axisLeft().scale(yScale2);
 
     var comma = d3.format(","); //Places comma in numbers that require it.
-    var formatPercent = d3.format('.2%');
 
     //Drop downs for both charts:
     var selectFilter = [ {'text':'None'},
@@ -909,23 +908,23 @@ d3.csv('./data/colleges.csv', function(csv) {
         d3.select('#retrate')
             .text(d.RetentionRate + "%")
         d3.select('#white')
-            .text(Math.round(d.percentWhite *100)+'%')
+            .text(d.percentWhite + "%")
         d3.select('#black')
-            .text(Math.round(d.percentBlack *100)+'%')
+            .text(d.percentBlack + "%")
         d3.select('#hispanic')
-            .text(Math.round(d.percentHispanic *100)+'%')
+            .text(d.percentHispanic + "%")
         d3.select('#asian')
-            .text(Math.round(d.percentAsian *100)+'%')
+            .text(d.percentAsian + "%")
         d3.select('#indian')
-            .text(Math.round(d.percentIndian *100)+'%')
+            .text(d.percentIndian + "%")
         d3.select('#islander')
-            .text(Math.round(d.percentIslander *100)+'%')
+            .text(d.percentIslander + "%")
         d3.select('#biracial')
-            .text(Math.round(d.percentBiracial *100)+'%')
+            .text(d.percentBiracial + "%")
         d3.select('#alien')
-            .text(Math.round(d.percentAlien *100)+'%')
+            .text(d.percentAlien + "%")
         d3.select('#parttime')
-            .text(Math.round(d.partTime *100)+'%' )
+            .text(d.partTime + "%")
         checkChart2(d);
         d3.select(this).raise().classed
        });
@@ -989,23 +988,23 @@ d3.csv('./data/colleges.csv', function(csv) {
                 d3.select(this)
             .classed('selected2', true)
         d3.select('#white')
-            .text(Math.round(d.percentWhite *100)+'%')
+            .text(d.percentWhite + "%")
         d3.select('#black')
-            .text(Math.round(d.percentBlack *100)+'%')
+            .text(d.percentBlack + "%")
         d3.select('#hispanic')
-            .text(Math.round(d.percentHispanic *100)+'%')
+            .text(d.percentHispanic + "%")
         d3.select('#asian')
-            .text(Math.round(d.percentAsian *100)+'%')
+            .text(d.percentAsian + "%")
         d3.select('#indian')
-            .text(Math.round(d.percentIndian *100)+'%')
+            .text(d.percentIndian + "%")
         d3.select('#islander')
-            .text(Math.round(d.percentIslander *100)+'%')
+            .text(d.percentIslander + "%")
         d3.select('#biracial')
-            .text(Math.round(d.percentBiracial *100)+'%')
+            .text(d.percentBiracial + "%")
         d3.select('#alien')
-            .text(Math.round(d.percentAlien *100)+'%')
+            .text(d.percentAlien + "%")
         d3.select('#parttime')
-            .text(Math.round(d.partTime *100)+'%' )
+            .text(d.partTime + "%")
         checkChart1(d);
        });
 });
